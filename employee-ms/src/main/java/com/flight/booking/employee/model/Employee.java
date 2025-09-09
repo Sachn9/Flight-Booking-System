@@ -13,7 +13,7 @@ import lombok.*; // lombok annotations to reduce boilerplate
 @Table(name = "employees") // explicit table name
 public class Employee {
 
-
+    //error
     @Id // primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto-increment id
     private Long id; // unique id for an employee

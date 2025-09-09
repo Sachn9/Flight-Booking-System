@@ -1,9 +1,7 @@
-package com.flightbookingsystem.database_api.model;
+package com.Flight_Booking_System.Aircraft_API.model;
 
-
-import jakarta.persistence.*;
-import jdk.jfr.DataAmount;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,23 +11,13 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+@Builder
 public class Aircraft {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID aircraftId;
-
     private String aircraftNumber;
     private String type;
     private Integer capacity;
     private String configuration;
-
-    @ManyToOne
-    @JoinColumn(name = "airline_id")
     private Airline airline;
-
-    @OneToMany(mappedBy = "aircraft", cascade = CascadeType.ALL)
     private List<Flight> flights;
 }
-
-

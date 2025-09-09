@@ -21,6 +21,7 @@ public class EmployeeController {
 
     @Autowired
     public EmployeeController(EmployeeService service) {
+
         this.service = service; // inject service
     }
 
@@ -44,6 +45,7 @@ public class EmployeeController {
     // Get all employees: GET /api/employees
     @GetMapping
     public ResponseEntity<List<EmployeeDTO>> getAll() {
+
         return ResponseEntity.ok(service.getAllEmployees());
     }
 

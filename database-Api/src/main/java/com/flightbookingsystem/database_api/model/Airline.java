@@ -20,6 +20,7 @@ public class Airline {
     private UUID airlineId;
 
     private String name;
+    //error
     private String officialName;
     private String address;
 
