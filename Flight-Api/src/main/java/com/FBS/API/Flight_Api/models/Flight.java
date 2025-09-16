@@ -16,6 +16,8 @@ import java.util.UUID;
 public class Flight {
     private UUID flightId;
 
+    private String flightName;
+
     private Airport originAirport;
 
     private Airport destinationAirport;

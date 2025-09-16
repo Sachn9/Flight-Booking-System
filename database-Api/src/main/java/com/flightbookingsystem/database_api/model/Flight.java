@@ -26,6 +26,8 @@ public class Flight {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID flightId;
 
+    private String flightName;
+
     @ManyToOne
     @JoinColumn(name = "origin_airport_id")
     private Airport originAirport;
