@@ -1,40 +1,53 @@
 package com.FBS.API.Flight_Api.services;
 
-import com.FBS.API.Flight_Api.dto.FlightDetailsDto;
-import com.FBS.API.Flight_Api.dto.SubFlightsDetailsDto;
-import com.FBS.API.Flight_Api.models.Aircraft;
-import com.FBS.API.Flight_Api.models.Airline;
-import com.FBS.API.Flight_Api.models.Flight;
-import com.FBS.API.Flight_Api.models.SubFlight;
+import com.FBS.API.Flight_Api.dto.FlightRequestDto;
+import com.FBS.API.Flight_Api.dto.FlightResponseDto;
+import com.FBS.API.Flight_Api.models.*;
 import com.FBS.API.Flight_Api.utility.MappingUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.nio.MappedByteBuffer;
-import java.util.List;
+import java.util.UUID;
 
 @Service
 public class FlightService {
 
     AirlineService airlineService;
     MappingUtility mappingUtility;
+    AircraftService aircraftService;
+    AirPortService airPortService;
+    DataBaseService dataBaseService;
     @Autowired
     public FlightService(AirlineService airlineService,
-                         MappingUtility mappingUtility){
+                         MappingUtility mappingUtility,
+                         AircraftService aircraftService,
+                         AirPortService airPortService,
+                         DataBaseService dataBaseService){
         this.airlineService=airlineService;
         this.mappingUtility=mappingUtility;
+        this.aircraftService=aircraftService;
+        this.airPortService=airPortService;
+        this.dataBaseService=dataBaseService;
     }
 
-    public Flight createFlight(FlightDetailsDto flightDetailsDto){
+    public Flight createFlight(FlightRequestDto flightRequestDto){
+
+
+        /**
+         * Get originAirPort and destinationAirport in the database
+         * call the AirportService
+         */
+        Airport originAirport=airPortService.getAirportById(flightRequestDto.getOriginAirportId());
+        Airport destinationAirport=airPortService.getAirportById(flightRequestDto.getDestinationAirportId());
 
         //get to airline by airlineId
-        Airline airline=airlineService.getAirLineById(flightDetailsDto.getAirlineId());
-        Flight flight=mappingUtility.mappingFlightModelToFlightDetailsDto(flightDetailsDto,airline);
-        //get aircraft for in airline
+        Airline airline=airlineService.getAirLineById(flightRequestDto.getAirlineId());
+
+        //get aircraft by aircraftId
+        Aircraft aircraft=aircraftService.getAircraftById(flightRequestDto.getAircraftId());
 
 
-
-
-
+        Flight flight=mappingUtility.mapFlightRequestToFlight(flightRequestDto,originAirport,destinationAirport,airline,aircraft);
+        flight=dataBaseService.createFlight(flight);
     }
 }

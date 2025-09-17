@@ -1,30 +1,34 @@
 package com.FBS.API.Flight_Api.utility;
 
-import com.FBS.API.Flight_Api.dto.FlightDetailsDto;
-import com.FBS.API.Flight_Api.dto.SubFlightsDetailsDto;
-import com.FBS.API.Flight_Api.models.Airline;
-import com.FBS.API.Flight_Api.models.Flight;
-import com.FBS.API.Flight_Api.models.SubFlight;
+import com.FBS.API.Flight_Api.dto.FlightRequestDto;
+import com.FBS.API.Flight_Api.dto.FlightResponseDto;
+import com.FBS.API.Flight_Api.models.*;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class MappingUtility {
 
-    public Flight mappingFlightModelToFlightDetailsDto(FlightDetailsDto flightDetailsDto,
-                                                       Airline airline){
-        Flight flight=Flight.builder()
-                .flightName(flightDetailsDto.getFlightName())
-                .status(flightDetailsDto.getStatus())
+    /**
+     * Maps FlightRequestDto to Flight entity
+     */
+    public Flight mapFlightRequestToFlight(FlightRequestDto dto,
+                             Airport originAirport, 
+                             Airport destinationAirport,
+                             Airline airline,
+                             Aircraft aircraft) {
+        return Flight.builder()
+                .flightName(dto.getFlightName())
+                .originAirport(originAirport)
+                .destinationAirport(destinationAirport)
+                .departure(dto.getDeparture())
+                .arrival(dto.getArrival())
+                .status(dto.getStatus())
                 .airline(airline)
-                .subFlights(null)
+                .aircraft(aircraft)
                 .build();
-        return flight;
-
     }
-
-
 
 
 }
