@@ -52,7 +52,7 @@ public class AircraftController {
         return new ResponseEntity<>(savedAircraft, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{aircraftId}")
+    @PutMapping("/update/{aircraftId}")
     public ResponseEntity<Aircraft> updateAircraft(@PathVariable UUID aircraftId, @RequestBody Aircraft updatedAircraft) {
         Aircraft aircraft = aircraftRepository.findById(aircraftId).orElse(null);
         if (aircraft == null) {

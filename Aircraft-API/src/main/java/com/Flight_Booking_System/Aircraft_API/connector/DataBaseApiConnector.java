@@ -55,4 +55,15 @@ public class DataBaseApiConnector {
         return responseEntity.getBody();
     }
 
+    //update aircraft
+    public Aircraft updateAircraftEndPoint(UUID aircraftId,Aircraft updatedAircraft){
+        //create url
+        String url = databaseApiUrl + "/update" + aircraftId;
+        RequestEntity requestEntity= RequestEntity.post(url).body(updatedAircraft);
+        RestTemplate restTemplate=new RestTemplate();
+        ResponseEntity< Aircraft> responseEntity=restTemplate.exchange(url, HttpMethod.POST,requestEntity, Aircraft.class);
+        return  responseEntity.getBody();
+
+    }
+
 }
