@@ -20,7 +20,7 @@ public class SubFlight {
     private ZonedDateTime departure;
     private ZonedDateTime arrival;
 
-    private UUID flightId; // Reference to main Flight
+    private Flight flight; // Reference to main Flight
 
     private Aircraft aircraft;
 }

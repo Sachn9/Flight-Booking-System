@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,18 +20,21 @@ public class FlightService {
     AircraftService aircraftService;
     AirPortService airPortService;
     DataBaseService dataBaseService;
+    SubFlightService subFlightService;
 
     @Autowired
     public FlightService(AirlineService airlineService,
                          MappingUtility mappingUtility,
                          AircraftService aircraftService,
                          AirPortService airPortService,
-                         DataBaseService dataBaseService){
+                         DataBaseService dataBaseService,
+                         SubFlightService subFlightService){
         this.airlineService=airlineService;
         this.mappingUtility=mappingUtility;
         this.aircraftService=aircraftService;
         this.airPortService=airPortService;
         this.dataBaseService=dataBaseService;
+        this.subFlightService=subFlightService;
     }
 
     public Flight createFlight(FlightRequestDto flightRequestDto){
@@ -93,6 +97,23 @@ public class FlightService {
         Aircraft aircraft=aircraftService.getAircraftById(flightRequestDto.getAircraftId());
 
         flight=mappingUtility.mapFlightRequestToFlight(flightRequestDto,originAirport,destinationAirport,airline,aircraft);
+
+        /**
+         * Add the SubFlight inside the flight
+         */
+
+        List<SubFlight> matchFlight=new ArrayList<>();
+        List<SubFlight> subFlights=subFlightService.getAllSubFlight();
+        for(SubFlight subFlight:subFlights){
+            if (flight.getFlightId().equals(subFlight.getFlight().getFlightId())){
+                matchFlight.add(subFlight);
+            }
+        }
+
+        flight.setSubFlights(matchFlight);
+
+
+
         flight=dataBaseService.flightUpdatedById(flight,flight.getFlightId());
         return flight;
 
