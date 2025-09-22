@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -99,20 +100,18 @@ public class FlightService {
         flight=mappingUtility.mapFlightRequestToFlight(flightRequestDto,originAirport,destinationAirport,airline,aircraft);
 
         /**
-         * Add the SubFlight inside the flight
+         *  Fetch and set subFlights for this flight
          */
-
-        List<SubFlight> matchFlight=new ArrayList<>();
-        List<SubFlight> subFlights=subFlightService.getAllSubFlight();
-        for(SubFlight subFlight:subFlights){
-            if (flight.getFlightId().equals(subFlight.getFlight().getFlightId())){
-                matchFlight.add(subFlight);
-            }
+        List<SubFlight> subFlights = subFlightService.getSubFlightsByFlightId(flight.getFlightId());
+        if (subFlights != null) {
+            // Filter out any null subFlights for safety
+            List<SubFlight> validSubFlights = subFlights.stream()
+                .filter(subFlight -> subFlight != null && subFlight.getFlight() != null)
+                .toList();
+            flight.setSubFlights(validSubFlights);
+        } else {
+            flight.setSubFlights(Collections.emptyList());
         }
-
-        flight.setSubFlights(matchFlight);
-
-
 
         flight=dataBaseService.flightUpdatedById(flight,flight.getFlightId());
         return flight;

@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class SubFlightService {
@@ -14,8 +16,26 @@ public class SubFlightService {
     public SubFlightService(SubFlightApiConnector subFlightApiConnector){
         this.subFlightApiConnector=subFlightApiConnector;
     }
-    public List<SubFlight> getAllSubFlight(){
-        List<SubFlight> subFlights=subFlightApiConnector.getAllSubFlights();
-        return subFlights;
+
+    /**
+     * Retrieves all subFlights for a specific flight ID
+     * @param flightId The ID of the flight to get subFlights for
+     * @return List of subFlights for the given flight ID, or empty list if none found
+     */
+    public List<SubFlight> getSubFlightsByFlightId(UUID flightId) {
+        if (flightId == null) {
+            return List.of();
+        }
+        
+        List<SubFlight> allSubFlights = subFlightApiConnector.getAllSubFlights();
+        if (allSubFlights == null) {
+            return List.of();
+        }
+        
+        return allSubFlights.stream()
+                .filter(subFlight -> subFlight != null 
+                    && subFlight.getFlight() != null 
+                    && flightId.equals(subFlight.getFlight().getFlightId()))
+                .collect(Collectors.toList());
     }
 }

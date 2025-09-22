@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Builder
@@ -23,4 +24,14 @@ public class SubFlight {
     private Flight flight; // Reference to main Flight
 
     private Aircraft aircraft;
+
+    private List<Seat> seats;
+
+    private List<Booking> bookings;
+
+    private List<FeedBack> feedbacks;
+
+    private List<WaitList> waitlists;
+
+    private List<PriceConfiguration> pricingConfigurations;
 }

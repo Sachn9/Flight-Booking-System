@@ -28,7 +28,5 @@ public class Seat {
 
     private Flight flight;
 
-    private Booking booking;
-
 }
 
