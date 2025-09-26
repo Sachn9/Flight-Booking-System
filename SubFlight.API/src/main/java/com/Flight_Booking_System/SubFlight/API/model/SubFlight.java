@@ -1,6 +1,6 @@
-package com.FBS.API.Flight_Api.models;
+package com.Flight_Booking_System.SubFlight.API.model;
 
-import com.FBS.API.Flight_Api.enums.FlightStatus;
+import com.Flight_Booking_System.SubFlight.API.enums.SubFlightStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,29 +10,28 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.UUID;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
-public class Flight {
-    private UUID flightId;
-
-    private String flightName;
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class SubFlight {
+    private UUID subFlightId;
 
     private Airport originAirport;
-
     private Airport destinationAirport;
 
     private ZonedDateTime departure;
     private ZonedDateTime arrival;
 
-    private FlightStatus status;
+    private double durationInHours;
 
-    private Airline airline;
+    private SubFlightStatus status; // Enum: SCHEDULED, DELAYED, CANCELLED, COMPLETED
+
+    private Flight flight; // Reference to main Flight
 
     private Aircraft aircraft;
 
-    private List<SubFlight> subFlights;
+    private Airline airline;
 
     private List<Seat> seats;
 

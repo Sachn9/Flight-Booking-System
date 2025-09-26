@@ -83,7 +83,7 @@ public class FlightController {
      * If we delete flight
      * Then we will do  delete flight bases on the flightId
      */
-    @DeleteMapping("/flightId")
+    @DeleteMapping("/{flightId}")
     public void deleteFlightById(@PathVariable UUID flightId){
         flightService.deleteFlight(flightId);
     }

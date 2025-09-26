@@ -1,6 +1,5 @@
-package com.FBS.API.Flight_Api.models;
+package com.Flight_Booking_System.SubFlight.API.model;
 
-import com.FBS.API.Flight_Api.enums.FlightStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,7 +25,7 @@ public class Flight {
     private ZonedDateTime departure;
     private ZonedDateTime arrival;
 
-    private FlightStatus status;
+    private String status;
 
     private Airline airline;
 
@@ -44,3 +43,4 @@ public class Flight {
 
     private List<PriceConfiguration> pricingConfigurations;
 }
+

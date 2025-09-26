@@ -5,10 +5,8 @@ import com.FBS.API.Flight_Api.exception.FlightNotFoundException;
 import com.FBS.API.Flight_Api.models.*;
 import com.FBS.API.Flight_Api.utility.MappingUtility;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;

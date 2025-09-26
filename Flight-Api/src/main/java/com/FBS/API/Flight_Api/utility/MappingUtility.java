@@ -2,10 +2,13 @@ package com.FBS.API.Flight_Api.utility;
 
 import com.FBS.API.Flight_Api.dto.FlightRequestDto;
 import com.FBS.API.Flight_Api.dto.FlightResponseDto;
+import com.FBS.API.Flight_Api.enums.FlightStatus;
 import com.FBS.API.Flight_Api.models.*;
 import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;
+
+import static com.FBS.API.Flight_Api.enums.FlightStatus.SCHEDULED;
 
 @Component
 public class MappingUtility {
@@ -24,7 +27,7 @@ public class MappingUtility {
                 .destinationAirport(destinationAirport)
                 .departure(dto.getDeparture())
                 .arrival(dto.getArrival())
-                .status(dto.getStatus())
+                .status(SCHEDULED)
                 .airline(airline)
                 .aircraft(aircraft)
                 .build();
